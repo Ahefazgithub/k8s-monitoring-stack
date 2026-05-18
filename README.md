@@ -7,6 +7,17 @@
 
 Production Kubernetes monitoring stack deployed on AWS EC2 using K3s and Helm.
 
+## Screenshots
+
+### Kubernetes Cluster Overview Dashboard
+![Cluster Overview](docs/cluster-overview.png)
+
+### Compute Resources by Namespace
+![Namespace Resources](docs/namespace-resources.png)
+
+### Alert Rules
+![Alert Rules](docs/alert-rules.png)
+
 ## Stack
 
 | Component | Purpose |
