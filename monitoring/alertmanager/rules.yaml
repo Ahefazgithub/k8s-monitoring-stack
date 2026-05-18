@@ -1,0 +1,37 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: flask-app-alerts
+  namespace: monitoring
+  labels:
+    release: prometheus-stack
+spec:
+  groups:
+    - name: flask-app
+      rules:
+        - alert: FlaskAppDown
+          expr: up{namespace="app"} == 0
+          for: 1m
+          labels:
+            severity: critical
+          annotations:
+            summary: "Flask app is down"
+            description: "Flask app has been down for more than 1 minute"
+
+        - alert: HighMemoryUsage
+          expr: container_memory_usage_bytes{namespace="app"} > 100000000
+          for: 2m
+          labels:
+            severity: warning
+          annotations:
+            summary: "High memory usage in app namespace"
+            description: "Memory usage is above 100MB for 2 minutes"
+
+        - alert: PodRestartingTooMuch
+          expr: rate(kube_pod_container_status_restarts_total{namespace="app"}[15m]) > 0
+          for: 1m
+          labels:
+            severity: warning
+          annotations:
+            summary: "Pod restarting frequently"
+            description: "Pod restarting frequently"
